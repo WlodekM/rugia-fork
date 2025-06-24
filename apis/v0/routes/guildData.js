@@ -19,7 +19,7 @@ module.exports = {
 	path: "data/guild/:guildId",
 	authRequired: true,
 	async execute(req, res, next) {
-		if (req.params.channelId !== "dbf2c411-6e27-50e0-b899-cbebfe91515c") {
+		if (req.params.guildId !== "dbf2c411-6e27-50e0-b899-cbebfe91515c") {
 			res.status(404);
 			res.json({
 				error: -1,
@@ -34,7 +34,7 @@ module.exports = {
 			payload: {
 				name: "Chat Domestique",
 				topic: "A stub to check the functionality of the server implementation",
-				channelIds: ["dbf2c411-6e27-50e0-b899-cbebfe91515c"]
+				channelIds: ["b9105365-a7ea-5fff-802b-5ef598439837"]
 			}
 		});
 	}
