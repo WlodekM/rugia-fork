@@ -21,43 +21,43 @@ const createAccountUserProfile = database.prepare("INSERT INTO meowerchat_users 
 export const method = "post";
 export const path = "register";
 export async function execute(req, res, next) {
-  if (typeof req.body !== "object") {
-    res.status(412);
-    res.json({ error: -1, message: "THIS IS A MATTRESS STORE NOT A MOTHERFUCKING SOUP STORE" });
-    return;
-  }
+	if (typeof req.body !== "object") {
+		res.status(412);
+		res.json({ error: -1, message: "THIS IS A MATTRESS STORE NOT A MOTHERFUCKING SOUP STORE" });
+		return;
+	}
 
-  if (typeof req.body.username !== "string" || typeof req.body.password !== "string") {
-    res.status(406);
-    res.json({ error: -2, message: "gimme an username and a password you ASSHAT" });
-    return;
-  }
+	if (typeof req.body.username !== "string" || typeof req.body.password !== "string") {
+		res.status(406);
+		res.json({ error: -2, message: "gimme an username and a password you ASSHAT" });
+		return;
+	}
 
-  if (req.body.username.length < 6) {
-    res.status(402);
-    res.json({ error: -3, message: "pay me if you want an username THAT short" });
-    return;
-  }
+	if (req.body.username.length < 6) {
+		res.status(402);
+		res.json({ error: -3, message: "pay me if you want an username THAT short" });
+		return;
+	}
 
-  if (acquireAccountByUsername.get(req.body.username) !== undefined) {
-    res.status(417);
-    res.json({ error: -4, message: "UNUSED USERNAME PLEASE" });
-    return;
-  }
+	if (acquireAccountByUsername.get(req.body.username) !== undefined) {
+		res.status(417);
+		res.json({ error: -4, message: "UNUSED USERNAME PLEASE" });
+		return;
+	}
 
-  const passhash = await bcrypt.hash(bssha256(req.body.password), 10);
-  const userId = uuid.v7();
-  createAccountAuthProfile.run(userId, req.body.username, passhash, 0, 0);
-  createAccountUserProfile.run(userId, req.body.username);
+	const passhash = await bcrypt.hash(bssha256(req.body.password), 10);
+	const userId = uuid.v7();
+	createAccountAuthProfile.run(userId, req.body.username, passhash, 0, 0);
+	createAccountUserProfile.run(userId, req.body.username);
 
-  res.status(200);
-  res.json({
-    error: 0,
-    message: "Success",
-    payload: {
-      userId
-    }
-  });
+	res.status(200);
+	res.json({
+		error: 0,
+		message: "Success",
+		payload: {
+			userId
+		}
+	});
 
-  return;
+	return;
 }

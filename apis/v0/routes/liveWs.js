@@ -14,81 +14,79 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-const mt = require("microtime");
-const uuid = require("uuid");
+import mt from "microtime";
+import uuid from "uuid";
 
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 
-module.exports = {
-	method: "ws",
-	path: "live/ws",
-	authRequired: false,
-	async execute(ws, req) {
-		const token = req.headers['sec-websocket-protocol'];
-		const userId = globalThis.verifyToken(token);
-		
-		ws.json = (data) => {
-			ws.send(JSON.stringify(data));
-			return;
-		}
-		
-		if (userId === null) {
-			ws.json({
-				type: "authStatus",
-				payload: {
-					success: false
-				}
-			});
-			ws.close();
+export const method = "ws";
+export const path = "live/ws";
+export const authRequired = false;
+export async function execute(ws, req) {
+	const token = req.headers['sec-websocket-protocol'];
+	const userId = globalThis.verifyToken(token);
 
-			return;
-		}
-		
-		function newMessageHandler(message) {
-			if (!true) return;
-			if (!true) return;
-		
-			ws.json({
-				type: "messageCreate",
-				payload: message
-			});
-		}
-		mainLoop.on("messageCreate", newMessageHandler);
-		ws.on("end", () => {
-			console.log("oh!");
-		});
-		
-		ws.json({
-			type: "serverAuthentication",
-			payload: {
-				serverName: "Rugia",
-				version: "00000000"
-			}
-		});
-		
+	ws.json = (data) => {
+		ws.send(JSON.stringify(data));
+		return;
+	};
+
+	if (userId === null) {
 		ws.json({
 			type: "authStatus",
 			payload: {
-				success: true
+				success: false
 			}
 		});
-		
+		ws.close();
+
+		return;
+	}
+
+	function newMessageHandler(message) {
+		if (!true) return;
+		if (!true) return;
+
 		ws.json({
-			type: "guildAvailable",
-			payload: {
-				uuid: "dbf2c411-6e27-50e0-b899-cbebfe91515c"
-			}
-		});
-		
-		ws.json({
-			type: "channelAvailable",
-			payload: {
-				uuid: "b9105365-a7ea-5fff-802b-5ef598439837"
-			}
-		});
-		
-		ws.json({
-			type: "serverFinished"
+			type: "messageCreate",
+			payload: message
 		});
 	}
+	mainLoop.on("messageCreate", newMessageHandler);
+	ws.on("end", () => {
+		console.log("oh!");
+	});
+
+	ws.json({
+		type: "serverAuthentication",
+		payload: {
+			serverName: "Rugia",
+			version: "00000000"
+		}
+	});
+
+	ws.json({
+		type: "authStatus",
+		payload: {
+			success: true
+		}
+	});
+
+	ws.json({
+		type: "guildAvailable",
+		payload: {
+			uuid: "dbf2c411-6e27-50e0-b899-cbebfe91515c"
+		}
+	});
+
+	ws.json({
+		type: "channelAvailable",
+		payload: {
+			uuid: "b9105365-a7ea-5fff-802b-5ef598439837"
+		}
+	});
+
+	ws.json({
+		type: "serverFinished"
+	});
 }

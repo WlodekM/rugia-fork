@@ -51,7 +51,7 @@ app.use(async (req, res, next) => {
 	req.on("end", async () => {
 		printMethod(req.method);
 		printStatusCode(res.statusCode);
-		printLatency(Date.now()-start);
+		printLatency(Date.now() - start);
 
 		stderr.write(`${req.path}\n`);
 	});
@@ -66,15 +66,15 @@ async function sleep(ms) {
 
 function printMethod(method) {
 	switch (method.toUpperCase()) {
-	case "GET":
-		stderr.green().write(method);
-		break;
-	case "POST":
-		stderr.blue().write(method);
-		break;
-	default:
-		stderr.red().write(method);
-		break;
+		case "GET":
+			stderr.green().write(method);
+			break;
+		case "POST":
+			stderr.blue().write(method);
+			break;
+		default:
+			stderr.red().write(method);
+			break;
 	}
 	stderr.write(" ").reset();
 
@@ -83,7 +83,7 @@ function printMethod(method) {
 
 function printLatency(latency) {
 	stderr.brightCyan();
-	
+
 	if (latency > 3) {
 		stderr.cyan();
 	}
@@ -122,12 +122,12 @@ function printStatusCode(statusCode) {
 	stderr.bold();
 
 	switch (colour) {
-	case 2:
-		stderr.brightGreen();
-		break;
-	default:
-		stderr.brightRed();
-		break;
+		case 2:
+			stderr.brightGreen();
+			break;
+		default:
+			stderr.brightRed();
+			break;
 	}
 
 	stderr.write(stringCode).reset().write(" ");
