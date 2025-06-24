@@ -1,0 +1,17 @@
+{
+  "name": "ass",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^11.10.0",
+    "eventemitter3": "^5.0.1",
+    "express": "^5.1.0",
+    "express-ws": "^5.0.2",
+    "microtime": "^3.1.1",
+    "nodejs-snowflake": "^2.0.1",
+    "uuid": "^11.1.0"
+  }
+}
