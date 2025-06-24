@@ -138,8 +138,8 @@ globalThis.loadApis = async () => {
 	const apisDir = fs.readdirSync('./apis');
 
 	for (let i = 0; i < apisDir.length; i++) {
-		const apisModulePath = path.join(__dirname, "./apis", apisDir[i]);
-		const apisModule = require(apisModulePath);
+		const apisModulePath = path.join(__dirname, "./apis", apisDir[i], 'index.js');
+		const apisModule = await import(apisModulePath);
 
 		process.stdout.write(`${apisModule.basePath}\n`);
 

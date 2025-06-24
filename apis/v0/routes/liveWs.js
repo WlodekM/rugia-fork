@@ -15,7 +15,7 @@
 */
 
 import mt from "microtime";
-import uuid from "uuid";
+import * as uuid from "uuid";
 
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 

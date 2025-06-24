@@ -18,7 +18,7 @@ import fs from "node:fs";
 
 const __dirname = import.meta.dirname;
 
-const routes = [];
+export const routes = [];
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 
 const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));
@@ -56,7 +56,4 @@ for (let i = 0; i < dirReading.length; i++) {
 	}
 }
 
-export default {
-	basePath: "/api/v0/",
-	routes
-};
+export const basePath = "/api/v0/";

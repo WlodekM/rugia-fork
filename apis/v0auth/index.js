@@ -19,7 +19,7 @@ import fs from "node:fs";
 
 const __dirname = import.meta.dirname;
 
-const routes = [];
+export const routes = [];
 
 const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));
 for (let i = 0; i < dirReading.length; i++) {
@@ -27,7 +27,4 @@ for (let i = 0; i < dirReading.length; i++) {
 	routes.push(module);
 }
 
-module.exports = {
-	basePath: "/api/v0/auth/",
-	routes
-};
+export const basePath = "/api/v0/auth/"

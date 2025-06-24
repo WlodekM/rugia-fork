@@ -17,34 +17,32 @@
 const acquireAuthDataById = database.prepare("SELECT * FROM meowerchat_authentication WHERE userId = ?;");
 const acquireUserDataById = database.prepare("SELECT * FROM meowerchat_users WHERE userId = ?;");
 
-module.exports = {
-	method: "get",
-	path: "data/user/:userId",
-	authRequired: false,
-	async execute(req, res, next) {
-		const authData = acquireAuthDataById.get(req.params.userId);
-		const userData = acquireUserDataById.get(req.params.userId);
+export const method = "get";
+export const path = "data/user/:userId";
+export const authRequired = false;
+export async function execute(req, res, next) {
+	const authData = acquireAuthDataById.get(req.params.userId);
+	const userData = acquireUserDataById.get(req.params.userId);
 
 
-		if (authData === undefined || userData === undefined) {
-			res.status(404);
-			res.json({
-				error: -1,
-				message: "No user with such userId was found."
-			});
-
-			return;
-		}
-
-		res.status(200);
+	if (authData === undefined || userData === undefined) {
+		res.status(404);
 		res.json({
-			error: 0,
-			payload: {
-				username: authData.username,
-				verified: authData.verified,
-				displayName: userData.displayName,
-				isAdmin: authData.isAdmin
-			}
+			error: -1,
+			message: "No user with such userId was found."
 		});
+
+		return;
 	}
+
+	res.status(200);
+	res.json({
+		error: 0,
+		payload: {
+			username: authData.username,
+			verified: authData.verified,
+			displayName: userData.displayName,
+			isAdmin: authData.isAdmin
+		}
+	});
 }
