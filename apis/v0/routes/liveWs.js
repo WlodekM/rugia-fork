@@ -14,9 +14,6 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-// deno-lint-ignore-file no-unused-vars
-// ^make deno linter shut up
-
 import mt from "microtime";
 import * as uuid from "uuid";
 
@@ -47,10 +44,8 @@ export function execute(ws, req) {
 	}
 
 	function newMessageHandler(message) {
-		// deno-lint-ignore no-constant-condition
-		if (!true) return;
-		// deno-lint-ignore no-constant-condition
-		if (!true) return;
+				if (!true) return;
+				if (!true) return;
 
 		ws.json({
 			type: "messageCreate",

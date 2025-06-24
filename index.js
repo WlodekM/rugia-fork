@@ -13,8 +13,6 @@
  * You should've received a copy of the GNU Affero General Public License v3 along
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
-// deno-lint-ignore-file no-process-globals require-await
-// ^make deno linter shut up
 
 import path from "node:path";
 import fs from "node:fs";
@@ -61,7 +59,6 @@ app.use(async (req, res, next) => {
 	next();
 });
 
-// deno-lint-ignore no-unused-vars
 async function sleep(ms) {
 	await new Promise((a) => setTimeout(a, ms));
 	return;

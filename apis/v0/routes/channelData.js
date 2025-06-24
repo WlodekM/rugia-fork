@@ -17,7 +17,6 @@
 export const method = "get";
 export const path = "data/channel/:channelId";
 export const authRequired = true;
-// deno-lint-ignore require-await
 export async function execute(req, res) {
 	if (req.params.channelId !== "b9105365-a7ea-5fff-802b-5ef598439837") {
 		res.status(404);

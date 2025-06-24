@@ -13,15 +13,12 @@
  * You should've received a copy of the GNU Affero General Public License v3 along
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
-// deno-lint-ignore-file no-process-globals require-await
-// ^make deno linter shut up
 
 import sqlite3 from "better-sqlite3";
 
 const database = new sqlite3("./database.db");
 database.pragma('journal_mode = WAL');
 
-// deno-lint-ignore no-unused-vars
 function setNewVersion(n) {
 	const queryA = database.prepare("DROP TABLE IF EXISTS meowerchat_messages;");
 	queryA.run();
@@ -33,7 +30,6 @@ function setNewVersion(n) {
 	queryC.run(0, n);
 }
 
-// deno-lint-ignore no-unused-vars
 function migrateFrom(database, n) {
 	return;
 }

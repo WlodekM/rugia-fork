@@ -14,7 +14,6 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-// deno-lint-ignore no-unused-vars
 globalThis.isUserAuthorisedInGuild = (userId, guildId) => {
 	if (guildId === "dbf2c411-6e27-50e0-b899-cbebfe91515c") {
 		return true;

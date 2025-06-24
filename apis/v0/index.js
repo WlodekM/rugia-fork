@@ -19,7 +19,6 @@ import fs from "node:fs";
 const __dirname = import.meta.dirname;
 
 export const routes = [];
-// deno-lint-ignore no-unused-vars
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 
 const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));

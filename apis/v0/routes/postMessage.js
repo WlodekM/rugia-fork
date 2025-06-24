@@ -19,7 +19,6 @@ import * as uuid from "uuid";
 export const method = "post";
 export const path = "message/post";
 export const authRequired = true;
-// deno-lint-ignore require-await
 export async function execute(req, res) {
 	if (typeof req.body !== "object") {
 		res.status(412);
