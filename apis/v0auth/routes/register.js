@@ -15,6 +15,12 @@
 */
 
 import bcrypt from "bcrypt";
+import crypto from 'crypto';
+import * as uuid from 'uuid'
+
+function bssha256(data) {
+	return crypto.createHash("sha256").update(data).digest("base64");
+}
 
 const acquireAccountByUsername = database.prepare("SELECT userId FROM meowerchat_authentication WHERE username = ?;");
 const createAccountAuthProfile = database.prepare("INSERT INTO meowerchat_authentication VALUES (?, ?, ?, ?, ?);");
