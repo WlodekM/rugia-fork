@@ -14,6 +14,8 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
+import bcrypt from "bcrypt";
+
 const acquireAccountByUsername = database.prepare("SELECT userId FROM meowerchat_authentication WHERE username = ?;");
 const createAccountAuthProfile = database.prepare("INSERT INTO meowerchat_authentication VALUES (?, ?, ?, ?, ?);");
 const createAccountUserProfile = database.prepare("INSERT INTO meowerchat_users VALUES (?, ?);");
