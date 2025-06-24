@@ -14,14 +14,16 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-const path = require("node:path");
-const fs = require("node:fs");
+import path from "node:path";
+import fs from "node:fs";
 
-const sqlite3 = require("better-sqlite3");
-const events = require("eventemitter3");
-const express = require("express");
-const ews = require("express-ws");
-const ansi = require("ansi");
+import sqlite3 from "better-sqlite3";
+import events from "eventemitter3";
+import express from "express";
+import ews from "express-ws";
+import ansi from "ansi";
+
+const __dirname = import.meta.dirname;
 
 const database = new sqlite3("./database.db");
 const stderr = ansi(process.stderr);
@@ -33,7 +35,7 @@ ews(app);
 
 globalThis.mainLoop = mainLoop;
 globalThis.database = database;
-require("./libs/data.js");
+await import("./libs/data.js");
 
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");

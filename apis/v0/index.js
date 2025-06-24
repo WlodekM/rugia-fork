@@ -13,15 +13,17 @@
  * You should've received a copy of the GNU Affero General Public License v3 along
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
-const path = require("node:path");
-const fs = require("node:fs");
+import path from "node:path";
+import fs from "node:fs";
+
+const __dirname = import.meta.dirname;
 
 const routes = [];
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 
 const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));
 for (let i = 0; i < dirReading.length; i++) {
-	const module = require(path.join(__dirname, "./routes", dirReading[i]));
+	const module = await import(path.join(__dirname, "./routes", dirReading[i]));
 	if (module.authRequired) {
 		const newModule = {
 			method: module.method,
@@ -54,7 +56,7 @@ for (let i = 0; i < dirReading.length; i++) {
 	}
 }
 
-module.exports = {
+export default {
 	basePath: "/api/v0/",
 	routes
 };

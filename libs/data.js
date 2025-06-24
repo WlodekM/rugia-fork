@@ -34,7 +34,7 @@ globalThis.isUserAuthorisedInChannel = (userId, guildId, channelId) => {
 	return false;
 }
 
-const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
+const validateToken = globalThis.database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 globalThis.verifyToken = (token) => {
 	const queryA = validateToken.get(token);
 	console.log(queryA);
