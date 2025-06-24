@@ -14,28 +14,26 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-module.exports = {
-	method: "get",
-	path: "data/channel/:channelId",
-	authRequired: true,
-	async execute(req, res, next) {
-		if (req.params.channelId !== "b9105365-a7ea-5fff-802b-5ef598439837") {
-			res.status(404);
-			res.json({
-				error: -1,
-				message: "No channel with such channelId was found."
-			});
-
-			return;
-		}
-
+export const method = "get";
+export const path = "data/channel/:channelId";
+export const authRequired = true;
+export async function execute(req, res) {
+	if (req.params.channelId !== "b9105365-a7ea-5fff-802b-5ef598439837") {
+		res.status(404);
 		res.json({
-			error: 0,
-			payload: {
-				name: "chat_domestique",
-				topic: "A stub to check the functionality of the server implementation",
-				guildId: "dbf2c411-6e27-50e0-b899-cbebfe91515c"
-			}
+			error: -1,
+			message: "No channel with such channelId was found."
 		});
+
+		return;
 	}
+
+	res.json({
+		error: 0,
+		payload: {
+			name: "chat_domestique",
+			topic: "A stub to check the functionality of the server implementation",
+			guildId: "dbf2c411-6e27-50e0-b899-cbebfe91515c"
+		}
+	});
 }

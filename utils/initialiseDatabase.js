@@ -14,12 +14,12 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-const sqlite3 = require("better-sqlite3");
+import sqlite3 from "better-sqlite3";
 
 const database = new sqlite3("./database.db");
 database.pragma('journal_mode = WAL');
 
-(async () => {
+(() => {
 	database.prepare("DROP TABLE IF EXISTS meowerchat_version;").run();
 	database.prepare("DROP TABLE IF EXISTS meowerchat_messages;").run();
 	database.prepare("DROP TABLE IF EXISTS meowerchat_authentication;").run();

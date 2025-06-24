@@ -14,14 +14,16 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-const path = require("node:path");
-const fs = require("node:fs");
+import path from "node:path";
+import fs from "node:fs";
 
-const sqlite3 = require("better-sqlite3");
-const events = require("eventemitter3");
-const express = require("express");
-const ews = require("express-ws");
-const ansi = require("ansi");
+import sqlite3 from "better-sqlite3";
+import events from "eventemitter3";
+import express from "express";
+import ews from "express-ws";
+import ansi from "ansi";
+
+const __dirname = import.meta.dirname;
 
 const database = new sqlite3("./database.db");
 const stderr = ansi(process.stderr);
@@ -33,9 +35,9 @@ ews(app);
 
 globalThis.mainLoop = mainLoop;
 globalThis.database = database;
-require("./libs/data.js");
+await import("./libs/data.js");
 
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Methods", "POST");
 	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -49,7 +51,7 @@ app.use(async (req, res, next) => {
 	req.on("end", async () => {
 		printMethod(req.method);
 		printStatusCode(res.statusCode);
-		printLatency(Date.now()-start);
+		printLatency(Date.now() - start);
 
 		stderr.write(`${req.path}\n`);
 	});
@@ -64,15 +66,15 @@ async function sleep(ms) {
 
 function printMethod(method) {
 	switch (method.toUpperCase()) {
-	case "GET":
-		stderr.green().write(method);
-		break;
-	case "POST":
-		stderr.blue().write(method);
-		break;
-	default:
-		stderr.red().write(method);
-		break;
+		case "GET":
+			stderr.green().write(method);
+			break;
+		case "POST":
+			stderr.blue().write(method);
+			break;
+		default:
+			stderr.red().write(method);
+			break;
 	}
 	stderr.write(" ").reset();
 
@@ -81,7 +83,7 @@ function printMethod(method) {
 
 function printLatency(latency) {
 	stderr.brightCyan();
-	
+
 	if (latency > 3) {
 		stderr.cyan();
 	}
@@ -120,12 +122,12 @@ function printStatusCode(statusCode) {
 	stderr.bold();
 
 	switch (colour) {
-	case 2:
-		stderr.brightGreen();
-		break;
-	default:
-		stderr.brightRed();
-		break;
+		case 2:
+			stderr.brightGreen();
+			break;
+		default:
+			stderr.brightRed();
+			break;
 	}
 
 	stderr.write(stringCode).reset().write(" ");
@@ -136,8 +138,8 @@ globalThis.loadApis = async () => {
 	const apisDir = fs.readdirSync('./apis');
 
 	for (let i = 0; i < apisDir.length; i++) {
-		const apisModulePath = path.join(__dirname, "./apis", apisDir[i]);
-		const apisModule = require(apisModulePath);
+		const apisModulePath = path.join(__dirname, "./apis", apisDir[i], 'index.js');
+		const apisModule = await import(apisModulePath);
 
 		process.stdout.write(`${apisModule.basePath}\n`);
 
