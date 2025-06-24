@@ -14,6 +14,9 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
+// deno-lint-ignore-file no-unused-vars
+// ^make deno linter shut up
+
 import mt from "microtime";
 import * as uuid from "uuid";
 
@@ -22,7 +25,7 @@ const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHE
 export const method = "ws";
 export const path = "live/ws";
 export const authRequired = false;
-export async function execute(ws, req) {
+export function execute(ws, req) {
 	const token = req.headers['sec-websocket-protocol'];
 	const userId = globalThis.verifyToken(token);
 
@@ -44,7 +47,9 @@ export async function execute(ws, req) {
 	}
 
 	function newMessageHandler(message) {
+		// deno-lint-ignore no-constant-condition
 		if (!true) return;
+		// deno-lint-ignore no-constant-condition
 		if (!true) return;
 
 		ws.json({

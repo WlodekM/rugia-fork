@@ -20,7 +20,7 @@ const acquireUserDataById = database.prepare("SELECT * FROM meowerchat_users WHE
 export const method = "get";
 export const path = "data/user/:userId";
 export const authRequired = false;
-export async function execute(req, res, next) {
+export function execute(req, res) {
 	const authData = acquireAuthDataById.get(req.params.userId);
 	const userData = acquireUserDataById.get(req.params.userId);
 

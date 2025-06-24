@@ -14,13 +14,13 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-import mt from "microtime";
 import * as uuid from "uuid";
 
 export const method = "post";
 export const path = "message/post";
 export const authRequired = true;
-export async function execute(req, res, next) {
+// deno-lint-ignore require-await
+export async function execute(req, res) {
 	if (typeof req.body !== "object") {
 		res.status(412);
 		res.json({ error: -1, message: "THIS IS A MATTRESS STORE NOT A MOTHERFUCKING SOUP STORE" });

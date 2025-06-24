@@ -20,7 +20,7 @@ const createAccountUserProfile = database.prepare("INSERT INTO meowerchat_users 
 
 export const method = "post";
 export const path = "register";
-export async function execute(req, res, next) {
+export async function execute(req, res) {
 	if (typeof req.body !== "object") {
 		res.status(412);
 		res.json({ error: -1, message: "THIS IS A MATTRESS STORE NOT A MOTHERFUCKING SOUP STORE" });

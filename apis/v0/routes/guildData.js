@@ -17,7 +17,8 @@
 export const method = "get";
 export const path = "data/guild/:guildId";
 export const authRequired = true;
-export async function execute(req, res, next) {
+// deno-lint-ignore require-await
+export async function execute(req, res) {
 	if (req.params.guildId !== "dbf2c411-6e27-50e0-b899-cbebfe91515c") {
 		res.status(404);
 		res.json({

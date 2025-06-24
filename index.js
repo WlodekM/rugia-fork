@@ -13,6 +13,8 @@
  * You should've received a copy of the GNU Affero General Public License v3 along
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
+// deno-lint-ignore-file no-process-globals require-await
+// ^make deno linter shut up
 
 import path from "node:path";
 import fs from "node:fs";
@@ -37,7 +39,7 @@ globalThis.mainLoop = mainLoop;
 globalThis.database = database;
 await import("./libs/data.js");
 
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Methods", "POST");
 	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -59,6 +61,7 @@ app.use(async (req, res, next) => {
 	next();
 });
 
+// deno-lint-ignore no-unused-vars
 async function sleep(ms) {
 	await new Promise((a) => setTimeout(a, ms));
 	return;
