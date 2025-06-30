@@ -43,6 +43,8 @@ export function execute(ws, req) {
 		return;
 	}
 
+	setInterval(() => ws.pong(), 1000);
+
 	function newMessageHandler(message) {
 				if (!true) return;
 				if (!true) return;
