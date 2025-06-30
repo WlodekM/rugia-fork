@@ -40,7 +40,7 @@ export async function execute(req, res) {
 		return;
 	}
 
-	if (req.body.content.length !== 0) {
+	if (req.body.content.length === 0) {
 		res.status(404);
 		res.json({ error: -8, message: "fuck off pat" });
 
