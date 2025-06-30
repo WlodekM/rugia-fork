@@ -15,24 +15,20 @@
 */
 
 const queryA = database.prepare("SELECT * FROM meowerchat_messages WHERE timestamp < ? AND channelId = ? LIMIT 100;");
+const queryB = database.prepare("SELECT * FROM meowerchat_messages WHERE channelId = ? LIMIT 100;");
 
 export const method = "get";
 export const path = "data/messages/:channelId";
 export const authRequired = true;
 export async function execute(req, res) {
 	let timestamp;
+	let a = true;
 
 	try {
 		timestamp = parseInt(req.query.timestamp);
 		if (isNaN(timestamp) || typeof timestamp !== "number") throw new Error("mf");
 	} catch (e) {
-		res.status(400);
-		res.json({
-			error: -11,
-			message: "what the fuck??"
-		});
-
-		return;
+		a = false;
 	}
 
 	if (req.params.channelId !== "b9105365-a7ea-5fff-802b-5ef598439837") {
@@ -45,7 +41,12 @@ export async function execute(req, res) {
 		return;
 	}
 
-	const messages = queryA.all(timestamp, req.params.channelId);
+	let messages;
+	if (a) {
+		messages = queryA.all(timestamp, req.params.channelId);
+	} else {
+		messages = queryB.all(req.params.channelId);
+	}
 
 	res.json({
 		error: 0,
