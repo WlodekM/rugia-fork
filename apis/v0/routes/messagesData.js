@@ -23,7 +23,7 @@ export async function execute(req, res) {
 	let timestamp;
 
 	try {
-		timestamp = parseInt(req.params.timestamp);
+		timestamp = parseInt(req.query.timestamp);
 		if (isNaN(timestamp) || typeof timestamp !== "number") throw new Error("mf");
 	} catch (e) {
 		res.status(400);
