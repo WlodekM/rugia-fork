@@ -18,7 +18,7 @@ export const method = "get";
 export const path = "data/guild/:guildId";
 export const authRequired = true;
 export async function execute(req, res) {
-	if (req.params.guildId !== "2afab9d1-71bc-5800-9bc8-93a4a00b7f1c") {
+	if (req.params.guildId !== "dbf2c411-6e27-50e0-b899-cbebfe91515c") {
 		res.status(404);
 		res.json({
 			error: -1,
@@ -33,7 +33,7 @@ export async function execute(req, res) {
 		payload: {
 			name: "Chat Domestique",
 			topic: "A stub to check the functionality of the server implementation",
-			channelIds: ["b4b7c88c-71b6-5260-807e-c0e42b299c19"]
+			channelIds: ["b9105365-a7ea-5fff-802b-5ef598439837"]
 		}
 	});
 }
