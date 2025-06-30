@@ -156,6 +156,11 @@ globalThis.loadApis = async () => {
 }
 globalThis.loadApis();
 
+const saveMessageQuery = database.prepare("INSERT INTO meowerchat_messages VALUES (?, ?, ?, ?, ?, ?)");
+globalThis.mainLoop.on("messageCreate", async (msg) => {
+	saveMessageQuery.run(msg.messageId, msg.authorId, msg.guildId, msg.channelId, msg.timestamp, msg.content);
+});
+
 (async () => {
 	app.listen(40000, () => {
 		process.stderr.write("OK\n");
