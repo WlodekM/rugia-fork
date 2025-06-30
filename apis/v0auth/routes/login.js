@@ -48,12 +48,6 @@ export async function execute(req, res) {
 		return;
 	}
 
-	if (req.body.username.length < 6) {
-		res.status(402);
-		res.json({ error: -3, message: "bitch" });
-		return;
-	}
-
 	if (acquireAccountByUsername.get(req.body.username) === undefined) {
 		res.status(417);
 		res.json({ error: -4, message: "USED USERNAME PLEASE" });
