@@ -17,7 +17,7 @@
 const queryA = database.prepare("SELECT * FROM meowerchat_messages WHERE timestamp < ? AND channelId = ? LIMIT 100;");
 
 export const method = "get";
-export const path = "data/channel/:channelId";
+export const path = "data/messages/:channelId";
 export const authRequired = true;
 export async function execute(req, res) {
 	let timestamp;
