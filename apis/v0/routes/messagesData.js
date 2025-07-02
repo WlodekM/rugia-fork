@@ -14,8 +14,8 @@
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
 
-const queryA = database.prepare("SELECT * FROM meowerchat_messages WHERE timestamp < ? AND channelId = ? LIMIT 100 ORDER BY timestamp ASC;");
-const queryB = database.prepare("SELECT * FROM meowerchat_messages WHERE channelId = ? LIMIT 100 ORDER BY timestamp ASC;");
+const queryA = database.prepare("SELECT * FROM meowerchat_messages ORDER BY timestamp DESC WHERE timestamp < ?; AND channelId = ? LIMIT 100;");
+const queryB = database.prepare("SELECT * FROM meowerchat_messages ORDER BY timestamp DESC WHERE channelId = ? LIMIT 100;");
 
 export const method = "get";
 export const path = "data/messages/:channelId";
