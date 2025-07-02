@@ -31,6 +31,7 @@ export async function execute(req, res) {
 	res.json({
 		error: 0,
 		payload: {
+			id: req.params.guildId,
 			name: "Chat Domestique",
 			topic: "A stub to check the functionality of the server implementation",
 			channelIds: ["b9105365-a7ea-5fff-802b-5ef598439837"]
