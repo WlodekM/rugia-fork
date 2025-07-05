@@ -70,7 +70,8 @@ export function execute(ws, req) {
 	ws.json({
 		type: "authStatus",
 		payload: {
-			success: true
+			success: true,
+			userId
 		}
 	});
 
