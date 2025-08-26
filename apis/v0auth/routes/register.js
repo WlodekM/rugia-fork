@@ -41,7 +41,7 @@ export async function execute(req, res) {
 		return;
 	}
 
-	if (req.body.username.length < 6) {
+	if (req.body.username.length < 5) {
 		res.status(402);
 		res.json({ error: -3, message: "pay me if you want an username THAT short" });
 		return;
