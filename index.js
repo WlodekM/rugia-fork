@@ -23,7 +23,7 @@ import express from "express";
 import ews from "express-ws";
 import ansi from "ansi";
 
-const __dirname = import.meta.dirname;
+const __dirname = import.meta.dirname ?? path.resolve('.');
 
 const database = new sqlite3("./database.db");
 const stderr = ansi(process.stderr);
@@ -138,7 +138,9 @@ globalThis.loadApis = async () => {
 	const apisDir = fs.readdirSync('./apis');
 
 	for (let i = 0; i < apisDir.length; i++) {
+		console.log(__dirname, "./apis", apisDir[i], 'index.js')
 		const apisModulePath = path.join(__dirname, "./apis", apisDir[i], 'index.js');
+		console.log('importing', apisModulePath)
 		const apisModule = await import(apisModulePath);
 
 		process.stdout.write(`${apisModule.basePath}\n`);
