@@ -39,7 +39,7 @@ await import("./libs/data.js");
 
 app.use((_req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader("Access-Control-Allow-Methods", "POST");
+	res.setHeader("Access-Control-Allow-Methods", "POST, GET");
 	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
 	next();
@@ -138,9 +138,7 @@ globalThis.loadApis = async () => {
 	const apisDir = fs.readdirSync('./apis');
 
 	for (let i = 0; i < apisDir.length; i++) {
-		console.log(__dirname, "./apis", apisDir[i], 'index.js')
 		const apisModulePath = path.join(__dirname, "./apis", apisDir[i], 'index.js');
-		console.log('importing', apisModulePath)
 		const apisModule = await import(apisModulePath);
 
 		process.stdout.write(`${apisModule.basePath}\n`);

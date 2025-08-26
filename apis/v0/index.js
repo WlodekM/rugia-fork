@@ -16,7 +16,7 @@
 import path from "node:path";
 import fs from "node:fs";
 
-const __dirname = import.meta.dirname;
+const __dirname = import.meta.dirname ?? path.resolve('.');
 
 export const routes = [];
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
