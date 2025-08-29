@@ -25,6 +25,8 @@ function bssha256(data) {
 const acquireAccountByUsername = database.prepare("SELECT userId FROM meowerchat_authentication WHERE username = ?;");
 const createAccountAuthProfile = database.prepare("INSERT INTO meowerchat_authentication VALUES (?, ?, ?, ?, ?);");
 const createAccountUserProfile = database.prepare("INSERT INTO meowerchat_users VALUES (?, ?);");
+// uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuh
+const createAccountUserProfileProfile = database.prepare("INSERT INTO meowerchat_users_profiles VALUES (?, ?);");
 
 export const method = "post";
 export const path = "register";
@@ -57,6 +59,7 @@ export async function execute(req, res) {
 	const userId = uuid.v7();
 	createAccountAuthProfile.run(userId, req.body.username, passhash, 0, 0);
 	createAccountUserProfile.run(userId, req.body.username);
+	createAccountUserProfileProfile.run(userId, 'This is a bio.');
 
 	res.status(200);
 	res.json({

@@ -24,6 +24,8 @@ const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHE
 const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));
 for (let i = 0; i < dirReading.length; i++) {
 	const module = await import(path.join(__dirname, "./routes", dirReading[i]));
+	if (!module.path)
+		continue;
 	if (module.authRequired) {
 		const newModule = {
 			method: module.method,

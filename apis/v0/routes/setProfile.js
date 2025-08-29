@@ -13,20 +13,4 @@
  * You should've received a copy of the GNU Affero General Public License v3 along
  * with Rugia. If not, see <https://www.gnu.org/licenses>
 */
-
-import path from "node:path";
-import fs from "node:fs";
-
-const __dirname = import.meta.dirname ?? path.resolve('.');
-
-export const routes = [];
-
-const dirReading = fs.readdirSync(path.join(__dirname, "./routes"));
-for (let i = 0; i < dirReading.length; i++) {
-	const module = await import(path.join(__dirname, "./routes", dirReading[i]));
-	if (!module.path)
-		continue;
-	routes.push(module);
-}
-
-export const basePath = "/api/v0/auth/"
+//TODO:

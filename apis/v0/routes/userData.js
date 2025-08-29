@@ -16,6 +16,7 @@
 
 const acquireAuthDataById = database.prepare("SELECT * FROM meowerchat_authentication WHERE userId = ?;");
 const acquireUserDataById = database.prepare("SELECT * FROM meowerchat_users WHERE userId = ?;");
+const acquireProfileDataById = database.prepare("SELECT * FROM meowerchat_users_profiles WHERE userId = ?;");
 
 export const method = "get";
 export const path = "data/user/:userId";
@@ -23,7 +24,7 @@ export const authRequired = false;
 export function execute(req, res) {
 	const authData = acquireAuthDataById.get(req.params.userId);
 	const userData = acquireUserDataById.get(req.params.userId);
-
+	const profileData = acquireProfileDataById.get(req.params.userId);
 
 	if (authData === undefined || userData === undefined) {
 		res.status(404);
@@ -42,7 +43,8 @@ export function execute(req, res) {
 			username: authData.username,
 			verified: authData.verified,
 			displayName: userData.displayName,
-			isAdmin: authData.isAdmin
+			isAdmin: authData.isAdmin,
+			bio: profileData.bio
 		}
 	});
 }
