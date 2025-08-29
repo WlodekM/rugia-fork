@@ -19,6 +19,16 @@ import * as uuid from "uuid";
 
 const validateToken = database.prepare("SELECT userId FROM meowerchat_tokens WHERE token = ?;");
 
+const connectedUsers = new Map();
+
+let wsId = 0;
+
+function announceAll(obj) {
+	for (const {ws} of connectedUsers.values()) {
+		ws.json(obj)
+	}
+}
+
 export const method = "ws";
 export const path = "live/ws";
 export const authRequired = false;
@@ -43,6 +53,10 @@ export function execute(ws, req) {
 		return;
 	}
 
+	let thisWsId = wsId++;
+
+	connectedUsers.set(thisWsId, {ws, userId});
+
 	setInterval(() => ws.pong(), 1000);
 
 	function newMessageHandler(message) {
@@ -55,9 +69,19 @@ export function execute(ws, req) {
 		});
 	}
 	mainLoop.on("messageCreate", newMessageHandler);
-	ws.on("end", () => {
+	function handleEnd() {
 		console.log("oh!");
-	});
+		connectedUsers.delete(thisWsId)
+		announceAll({
+			type: 'statusUpdate',
+			payload: {
+				userId,
+				status: 'offline'
+			}
+		})
+	}
+	ws.on("end", handleEnd);
+	ws.on("error", handleEnd)
 
 	ws.json({
 		type: "serverAuthentication",
@@ -90,6 +114,21 @@ export function execute(ws, req) {
 	});
 
 	ws.json({
+		type: "usersOnline",
+		payload: {
+			users: [...connectedUsers.values()].map(({userId})=>userId)
+		}
+	});
+
+	ws.json({
 		type: "serverFinished"
 	});
+
+	announceAll({
+		type: 'statusUpdate',
+		payload: {
+			userId,
+			status: 'online'
+		}
+	})
 }
