@@ -30,9 +30,10 @@ database.pragma('journal_mode = WAL');
 	database.prepare("CREATE TABLE meowerchat_version(mkey TEXT PRIMARY KEY, version INTEGER);").run();
 	database.prepare("CREATE TABLE meowerchat_messages(messageId TEXT PRIMARY KEY, authorId TEXT, guildId TEXT, channelId TEXT, timestamp INTEGER, content TEXT);").run();
 	database.prepare("CREATE TABLE meowerchat_authentication(userId TEXT PRIMARY KEY, username TEXT UNIQUE, passwordHash INTEGER, verified INTEGER, isAdmin INTEGER);").run();
-	database.prepare("CREATE TABLE meowerchat_users(userId TEXT PRIMARY KEY, displayName TEXT, bio TEXT);").run();
+	database.prepare("CREATE TABLE meowerchat_users(userId TEXT PRIMARY KEY, displayName TEXT);").run();
 	database.prepare("CREATE TABLE meowerchat_users_guilds(userId TEXT PRIMARY KEY, guildId text);").run();
+	database.prepare("CREATE TABLE meowerchat_users_profiles(userId TEXT PRIMARY KEY, bio text);").run();
 	database.prepare("CREATE TABLE meowerchat_tokens(token TEXT PRIMARY KEY, userId TEXT);").run();
 
-	database.prepare("INSERT INTO meowerchat_version VALUES (?, ?);").run(0, 0);
+	database.prepare("INSERT INTO meowerchat_version VALUES (?, ?);").run(0, 1);
 })();

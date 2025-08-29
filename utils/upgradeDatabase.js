@@ -31,16 +31,24 @@ function setNewVersion(n) {
 }
 
 function migrateFrom(database, n) {
+	if (n == 0) {
+		database.prepare("CREATE TABLE meowerchat_users_profiles(userId TEXT PRIMARY KEY, bio text);").run();
+	}
 	return;
 }
 
+const LATEST_VER = 1;
+
 (async () => {
 	const queryA = database.prepare("SELECT version FROM meowerchat_version WHERE mkey = 0");
+	console.log(queryA, queryA.get())
 	const { version } = queryA.get();
 
-	if (version === 0) {
+	if (version === LATEST_VER) {
 		process.stderr.write("Database is already the latest version!\n");
 		database.close();
 		process.exit(1);
 	}
+	setNewVersion(LATEST_VER)
+	migrateFrom(database, version)
 })();
